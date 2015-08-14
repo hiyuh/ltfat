@@ -1,6 +1,6 @@
-function p = comp_quadratictfdist(f, q);;
-% Comp_QUADRATICTFDIST Compute quadratic time-frequency distribution
-%   Usage p = comp_quadratictfdist(f, q);;
+function p = comp_quadtfdist(f, q);;
+% Comp_QUADTFDIST Compute quadratic time-frequency distribution
+%   Usage p = comp_quadtfdist(f, q);;
 %
 %   Input parameters:
 %         f      : Input vector

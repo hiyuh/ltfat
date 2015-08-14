@@ -34,5 +34,5 @@ c = [zeros(length(c), 1) c; zeros(1, Ls)];
 
 c = fftshift(c);
 
-p = comp_quadratictfdist(f, c);
+p = comp_quadtfdist(f, c);
 
