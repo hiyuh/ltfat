@@ -9,7 +9,15 @@ function r = drihaczekdist(f);
 %   .. math:: r\left( k+1,\; l+1 \right)\; =\; f\left( l+1 \right)\; \overline{c\left( k+1 \right)}e^{-2\pi ikl/L}
 %
 %   where $k, l=0,\ldots,L-1$ and $c$ is the Fourier transform of $f$.
-
+%
+%   The discrete Rihaczek distribution $r$ of a vector $f$ equals the 
+%   discrete symplectic Fourier transform of the discrete windowed Fourier 
+%   transform of $f$, with respect to the window $f$, i.e.::
+%
+%     r = dsft(dgt(f,f,1,length(f)));
+%
+%   see also: dmargenauhilldist
+%
 %   AUTHOR: Jordy van Velthoven
 %   TESTING: TEST_DRIHACZEKDIST
 %   REFERENCE: REF_DRIHACZEKDIST
