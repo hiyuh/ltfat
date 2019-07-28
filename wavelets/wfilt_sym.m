@@ -65,50 +65,45 @@ for i = 1:index;
 	b = dec2bin(i - 1, log2index);
 	for j = 1:(nrz / 2);
 		if (b(j) == 0);
-			rs = rz(j);
+			phase(i, :) += atang(rz(j), log2nn);
 		else
-			rs = rz(nrz - j + 1);
+			phase(i, :) += atang(1 / rz(j), log2nn);
 		end;
-		phase(i, :) += atang(rs, log2nn);
 	end;
 	for j = 1:(nri / 4);
 		if (b(j + nrz / 2) == 0);
-			rs = ri(2 * j - 1);
+			phase(i, :) += atang(ri(2 * j - 1), log2nn);
 		else
-			rs = 1 / ri(2 * j - 1);
+			phase(i, :) += atang(1 / ri(2 * j - 1), log2nn);
 		end;
-		phase(i, :) += atang(rs, log2nn);
 	end;
 end;
 
 % NOTE: To retain only the non linear part of the phase.
 for i = 1:index;
 	lpi = linspace(phase(i, 1), phase(i, nn + 1), nn + 1);
-	nlp(i, :) = phase(i, :) - lpi;
+	phase(i, :) = phase(i, :) - lpi;
 end;
 
 % NOTE: To see which phase is closer to zero we select the one with minimun variance
-[~, pos] = min(sum(nlp'.^2));
+pe = sum(phase'.^2);
+[~, pos] = min(pe);
 % FIXME: MATLAB's SYMAUX looks doing artificial offset to pos...
-bin = dec2bin(pos - 1, log2index);
+b = dec2bin(pos - 1, log2index);
 rc = [];
 for i = 1:(nrz / 2);
 	if (b(i) == 0);
-		rs = rz(i);
+		rc = [rc, rz(i)];
 	else
-		 rs = 1 / rz(i);
-		%rs = rz(nrz - i + 1);
+		rc = [rc, 1 / rz(i)];
 	end;
-	rc = [rc, rs];
 end;
 for i = 1:(nri / 4);
 	if (b(i + nrz / 2) == 0);
-		rs = ri(2 * i - 1);
+		rc = [rc, ri(2 * i - 1)];
 	else
-		 rs = 1 / ri(2 * i - 1);
-		%rs = ri(nri - 2 * i + 2);
+		rc = [rc, 1 / ri(2 * i - 1)];
 	end;
-	rc = [rc, rs];
 end;
 
 %rc = [-ones(1, N), sort(rc,  'ascend')(:)'];
